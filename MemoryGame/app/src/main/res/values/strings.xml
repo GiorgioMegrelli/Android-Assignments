@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Memory Game</string>
+    <string name="grid_cell">Cell\'s Card Image</string>
+    <string name="success_text">Success: %d</string>
+    <string name="fail_text">Fail: %d</string>
+    <string name="restart_text">Restart</string>
+</resources>

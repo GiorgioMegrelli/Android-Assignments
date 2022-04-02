@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="card_grid_col_n">2</integer>
+    <integer name="card_grid_row_n">3</integer>
+</resources>
