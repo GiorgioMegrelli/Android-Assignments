@@ -1,23 +1,15 @@
 package ge.gmegrelishvili.memorygame
 
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import android.widget.ImageView
 
 class MutableCardView(
-    cardViewListener: CardViewListener,
-    private var imageView: ImageView
+    private val cardViewListener: CardViewListener,
+    private val imageView: ImageView
 ) : CardView {
 
     companion object {
         const val BackgroundImage = R.drawable.card_background
-
-        class CardViewHider(private var imageView: ImageView) : Runnable {
-            override fun run() {
-                imageView.visibility = View.INVISIBLE
-            }
-        }
     }
 
     private var opened = false
@@ -38,10 +30,6 @@ class MutableCardView(
             if (opened && frontImageRes != null) frontImageRes!!
             else BackgroundImage
         imageView.setImageResource(imageSrc)
-    }
-
-    override fun isOpen(): Boolean {
-        return opened
     }
 
     private fun turnCard(open: Boolean) {
@@ -71,18 +59,11 @@ class MutableCardView(
         updateImage()
     }
 
-    override fun hideCard(sleepTime: Long) {
-        if (sleepTime <= 0) {
-            imageView.visibility = View.INVISIBLE
-        } else {
-            hidden = true
-            Handler(Looper.getMainLooper()).postDelayed({
-                imageView.visibility = View.INVISIBLE
-            }, sleepTime)
-        }
+    override fun hideCard() {
+        imageView.visibility = View.INVISIBLE
     }
 
-    override fun equalCard(other: Any?): Boolean {
+    override fun equalCardValues(other: CardView?): Boolean {
         if (other == null || other !is MutableCardView) {
             return false
         }

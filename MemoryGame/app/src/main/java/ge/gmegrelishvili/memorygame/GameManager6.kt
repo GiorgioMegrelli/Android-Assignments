@@ -1,5 +1,7 @@
 package ge.gmegrelishvili.memorygame
 
+import android.os.Handler
+import android.os.Looper
 import android.widget.ImageView
 import kotlin.random.Random
 
@@ -30,7 +32,8 @@ class GameManager6(
     private val maxRandomNumbers = maxCards / pairSize
     private val random = Random(System.nanoTime())
     private val cardViews = mutableListOf<CardView>()
-    private val openedViews = mutableListOf<CardView>()
+    private val openedViews = hashSetOf<CardView>()
+    private val handler = Handler(Looper.getMainLooper())
 
     init {
         for (i in 0 until maxCards) {
@@ -69,17 +72,13 @@ class GameManager6(
         openedViews.clear()
         progressController.clearScores()
         progressController.clearHighlight()
+        handler.removeCallbacksAndMessages(null)
     }
 
     private fun equalOpenedCards(): Boolean {
-        for (i in 0 until openedViews.size - 1) {
-            for (j in i + 1 until openedViews.size) {
-                if (!openedViews[i].equalCard(openedViews[j])) {
-                    return false
-                }
-            }
-        }
-        return true
+        // Special Case...
+        val openedViewsList = openedViews.toList()
+        return openedViewsList[0].equalCardValues(openedViewsList[1])
     }
 
     override fun onClick(cardView: CardView) {
@@ -98,7 +97,9 @@ class GameManager6(
             if (equalOpenedCards()) {
                 progressController.success()
                 for (card in openedViews) {
-                    card.hideCard(sleepTime)
+                    handler.postDelayed({
+                        card.hideCard()
+                    }, sleepTime)
                 }
                 openedViews.clear()
             } else {

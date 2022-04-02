@@ -10,8 +10,9 @@ class DefaultProgressController(
     private var failTView: TextView
 ) : ProgressController {
 
-    private var successScore = 0
-    private var failScore = 0
+    private val initScore = 0
+    private var successScore = initScore
+    private var failScore = initScore
 
     init {
         updateScores()
@@ -44,8 +45,8 @@ class DefaultProgressController(
     }
 
     override fun clearScores() {
-        successScore = 0
-        failScore = 0
+        successScore = initScore
+        failScore = initScore
         updateScores()
     }
 }
