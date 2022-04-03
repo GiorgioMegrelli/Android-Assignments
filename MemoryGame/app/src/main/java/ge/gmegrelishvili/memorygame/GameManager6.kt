@@ -86,7 +86,9 @@ class GameManager6(
 
         if (openedViews.size == pairSize) {
             for (card in openedViews) {
-                card.closeCard()
+                if (card !== cardView) {
+                    card.closeCard()
+                }
             }
             openedViews.clear()
         }
