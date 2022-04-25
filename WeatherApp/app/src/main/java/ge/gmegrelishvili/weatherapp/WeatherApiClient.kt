@@ -9,9 +9,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.Serializable
 
-class WeatherApiClient : ApiClient {
-    companion object {
+class WeatherApiClient : ApiClient() {
+    companion object : Serializable {
         const val BaseUrl = "https://api.openweathermap.org"
     }
 
@@ -25,31 +26,28 @@ class WeatherApiClient : ApiClient {
             .build()
 
         httpClient = retrofit.create(ApiRoute::class.java)
-
-        getDetails("Tbilisi")
-        getHourly("Tbilisi")
     }
 
-    override fun getDetails(cityname: String) {
-        httpClient.getDetails("Tbilisi", apiKey).enqueue(object : Callback<DetailsModel> {
+    override fun getDetails(cityname: String, callback: (Throwable?, DetailsModel?) -> Unit) {
+        httpClient.getDetails(cityname, apiKey).enqueue(object : Callback<DetailsModel> {
             override fun onResponse(call: Call<DetailsModel>, response: Response<DetailsModel>) {
-                Log.i("MyLogDetails", response.body().toString())
+                callback(null, response.body())
             }
 
             override fun onFailure(call: Call<DetailsModel>, t: Throwable) {
-                Log.i("MyLogDetails", t.toString())
+                callback(t, null)
             }
         })
     }
 
-    override fun getHourly(cityname: String) {
-        httpClient.getHourly("Tbilisi", apiKey).enqueue(object : Callback<HourlyModel> {
+    override fun getHourly(cityname: String, callback: (Throwable?, HourlyModel?) -> Unit) {
+        httpClient.getHourly(cityname, apiKey).enqueue(object : Callback<HourlyModel> {
             override fun onResponse(call: Call<HourlyModel>, response: Response<HourlyModel>) {
-                Log.i("MyLogHourly", response.body().toString())
+                callback(null, response.body())
             }
 
             override fun onFailure(call: Call<HourlyModel>, t: Throwable) {
-                Log.i("MyLogHourly", t.toString())
+                callback(t, null)
             }
         })
     }

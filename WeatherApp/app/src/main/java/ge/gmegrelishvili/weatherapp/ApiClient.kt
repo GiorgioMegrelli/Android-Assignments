@@ -1,7 +1,10 @@
 package ge.gmegrelishvili.weatherapp
 
-interface ApiClient {
-    fun getDetails(cityname: String)
+import ge.gmegrelishvili.weatherapp.model.DetailsModel
+import ge.gmegrelishvili.weatherapp.model.HourlyModel
 
-    fun getHourly(cityname: String)
+abstract class ApiClient {
+    abstract fun getDetails(cityname: String, callback: (Throwable?, DetailsModel?) -> Unit)
+
+    abstract fun getHourly(cityname: String, callback: (Throwable?, HourlyModel?) -> Unit)
 }

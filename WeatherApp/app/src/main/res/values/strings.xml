@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">Weather App</string>
+    <!-- Content Description -->
+    <string name="cd_georgia_flag">Georgia Flag</string>
+    <string name="cd_uk_flag">UK Flag</string>
+    <string name="cd_jamaica_flag">Jamaica Flag</string>
+    <string name="cd_menu_today">Today Icon</string>
+    <string name="cd_menu_hourly">Hourly Icon</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="weather_icon">Weather Icon</string>
+    <!-- Details -->
+    <string name="details_text_details">Details</string>
+    <string name="details_text_temp">Temperature</string>
+    <string name="details_text_feels_like">Feels Like</string>
+    <string name="details_text_humidity">Humidity</string>
+    <string name="details_text_pressure">Pressure</string>
+    <!-- Details Templates -->
+    <string name="details_text_temp_tmp">%s°</string>
+    <string name="details_text_humidity_tmp">%s\%%</string>
+    <!-- Hourly -->
 </resources>

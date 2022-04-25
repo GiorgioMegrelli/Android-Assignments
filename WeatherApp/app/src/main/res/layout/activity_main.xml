@@ -4,7 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintBottom_toTopOf="@+id/view_menu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
+        android:id="@+id/view_menu"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/view_menu_height"
         android:background="@color/view_menu_bg"
@@ -14,22 +26,24 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageButton
-            android:id="@+id/view_today_button"
+            android:id="@+id/menu_today_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/transparent"
+            android:contentDescription="@string/cd_menu_today"
             android:padding="@dimen/view_menu_icon_padding"
             android:scaleType="fitCenter"
             android:src="@drawable/today"
             app:tint="@color/white" />
 
         <ImageButton
-            android:id="@+id/view_hourly_button"
+            android:id="@+id/menu_hourly_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/transparent"
+            android:contentDescription="@string/cd_menu_hourly"
             android:padding="@dimen/view_menu_icon_padding"
             android:scaleType="fitCenter"
             android:src="@drawable/hourly"

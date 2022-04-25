@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/view_header"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:orientation="horizontal">
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="1" />
+
+    <ImageButton
+        android:id="@+id/flag_icon_georgia"
+        android:layout_width="@dimen/view_header_icon_size"
+        android:layout_height="@dimen/view_header_icon_size"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/cd_georgia_flag"
+        android:scaleType="fitCenter"
+        android:src="@drawable/georgia"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="1" />
+
+    <ImageButton
+        android:id="@+id/flag_icon_uk"
+        android:layout_width="@dimen/view_header_icon_size"
+        android:layout_height="@dimen/view_header_icon_size"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/cd_uk_flag"
+        android:scaleType="fitCenter"
+        android:src="@drawable/uk" />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="1" />
+
+    <ImageButton
+        android:id="@+id/flag_icon_jamaica"
+        android:layout_width="@dimen/view_header_icon_size"
+        android:layout_height="@dimen/view_header_icon_size"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/cd_jamaica_flag"
+        android:scaleType="fitCenter"
+        android:src="@drawable/jamaica" />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="1" />
+
+</LinearLayout>
