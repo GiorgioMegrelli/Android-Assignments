@@ -4,15 +4,23 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import ge.gmegrelishvili.weatherapp.ApiClient
+import ge.gmegrelishvili.weatherapp.api.ApiClient
 import ge.gmegrelishvili.weatherapp.R
-import ge.gmegrelishvili.weatherapp.WeatherApiClient
+import ge.gmegrelishvili.weatherapp.api.WeatherApiClient
 import java.util.*
 
 abstract class WeatherAppFragment : Fragment() {
-    abstract fun show(cityName: String)
+    companion object {
+        const val Am6 = 6 * 60
+        const val Pm6 = 18 * 60
+        const val FlagIconClicked = "ClickedCapital"
+
+        val apiClient: ApiClient = WeatherApiClient()
+    }
 
     protected lateinit var createdView: View
+
+    abstract fun show(cityName: String)
 
     fun showToast(value: String) {
         Toast.makeText(requireContext(), value, Toast.LENGTH_LONG).show()
@@ -30,12 +38,4 @@ abstract class WeatherAppFragment : Fragment() {
         createdView.setBackgroundColor(backColor)
     }
 
-    companion object {
-        const val Am6 = 6 * 60
-        const val Pm6 = 18 * 60
-
-        const val argApiClient = "ApiClient"
-
-        val apiClient: ApiClient = WeatherApiClient()
-    }
 }

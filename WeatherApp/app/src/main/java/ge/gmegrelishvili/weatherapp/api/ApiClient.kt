@@ -1,4 +1,4 @@
-package ge.gmegrelishvili.weatherapp
+package ge.gmegrelishvili.weatherapp.api
 
 import ge.gmegrelishvili.weatherapp.model.DetailsModel
 import ge.gmegrelishvili.weatherapp.model.HourlyModel

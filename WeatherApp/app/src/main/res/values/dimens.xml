@@ -7,15 +7,15 @@
     <dimen name="capital_name_margin">32dp</dimen>
     <dimen name="capital_name">16sp</dimen>
     <dimen name="capital_name_margin_bottom">16dp</dimen>
-    <!-- Details -->
-    <dimen name="details_weather_icon_margin">16dp</dimen>
-    <dimen name="details_weather_icon_size">100dp</dimen>
-    <dimen name="details_weather_temp_margin">16dp</dimen>
-    <dimen name="details_weather_temp_font_size">48sp</dimen>
-    <dimen name="details_weather_desc_margin">32dp</dimen>
-    <dimen name="details_weather_desc_font_size">16sp</dimen>
-    <dimen name="details_weather_details_margin">16dp</dimen>
-    <dimen name="details_weather_details_font_size">16sp</dimen>
+    <!-- Today -->
+    <dimen name="today_weather_icon_margin">16dp</dimen>
+    <dimen name="today_weather_icon_size">100dp</dimen>
+    <dimen name="today_weather_temp_margin">16dp</dimen>
+    <dimen name="today_weather_temp_font_size">48sp</dimen>
+    <dimen name="today_weather_desc_margin">32dp</dimen>
+    <dimen name="today_weather_desc_font_size">16sp</dimen>
+    <dimen name="today_weather_details_margin">16dp</dimen>
+    <dimen name="today_weather_details_font_size">16sp</dimen>
     <!-- Hourly -->
     <dimen name="hourly_row_item_default_margin">16dp</dimen>
     <dimen name="hourly_row_item_height">70dp</dimen>

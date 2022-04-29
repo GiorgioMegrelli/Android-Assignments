@@ -8,14 +8,14 @@
     <string name="cd_menu_hourly">Hourly Icon</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="weather_icon">Weather Icon</string>
-    <!-- Details -->
-    <string name="details_text_details">Details</string>
-    <string name="details_text_temp">Temperature</string>
-    <string name="details_text_feels_like">Feels Like</string>
-    <string name="details_text_humidity">Humidity</string>
-    <string name="details_text_pressure">Pressure</string>
-    <!-- Details Templates -->
-    <string name="details_text_temp_tmp">%s°</string>
-    <string name="details_text_humidity_tmp">%s\%%</string>
+    <!-- Today -->
+    <string name="today_text_details">Details</string>
+    <string name="today_text_temp">Temperature</string>
+    <string name="today_text_feels_like">Feels Like</string>
+    <string name="today_text_humidity">Humidity</string>
+    <string name="today_text_pressure">Pressure</string>
+    <!-- Today Templates -->
+    <string name="today_text_temp_tmp">%s°</string>
+    <string name="today_text_humidity_tmp">%s\%%</string>
     <!-- Hourly -->
 </resources>

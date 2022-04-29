@@ -2,6 +2,7 @@ package ge.gmegrelishvili.weatherapp
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
+import ge.gmegrelishvili.weatherapp.adapter.WeatherAppPagerAdapter
 
 class WeatherAppContentController(context: AppCompatActivity) : ContentController {
     private val pagerAdapter = context.findViewById<ViewPager2>(R.id.fragment_container)

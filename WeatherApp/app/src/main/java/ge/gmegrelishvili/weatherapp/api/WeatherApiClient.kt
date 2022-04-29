@@ -1,6 +1,5 @@
-package ge.gmegrelishvili.weatherapp
+package ge.gmegrelishvili.weatherapp.api
 
-import android.util.Log
 import ge.gmegrelishvili.weatherapp.model.DetailsModel
 import ge.gmegrelishvili.weatherapp.model.HourlyModel
 import ge.gmegrelishvili.weatherapp.security.ApiKeyHolder

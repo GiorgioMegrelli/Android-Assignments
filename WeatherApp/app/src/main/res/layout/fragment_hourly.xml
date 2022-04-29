@@ -10,7 +10,7 @@
         layout="@layout/layout_flags"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/details_weather_icon_margin"
+        android:layout_marginTop="@dimen/today_weather_icon_margin"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
