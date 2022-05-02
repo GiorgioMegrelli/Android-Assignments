@@ -10,11 +10,10 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ge.gmegrelishvili.weatherapp.Country
-import ge.gmegrelishvili.weatherapp.adapter.HourlyRecyclerViewAdapter
 import ge.gmegrelishvili.weatherapp.R
+import ge.gmegrelishvili.weatherapp.adapter.HourlyRecyclerViewAdapter
 import ge.gmegrelishvili.weatherapp.model.HourlyModel
 
 class HourlyFragment : WeatherAppFragment() {
@@ -57,22 +56,25 @@ class HourlyFragment : WeatherAppFragment() {
     }
 
     override fun show(cityName: String) {
-        val adapter = HourlyRecyclerViewAdapter(this)
         val recyclerView = createdView.findViewById<RecyclerView>(R.id.hourly_row_items)
+        val adapter = HourlyRecyclerViewAdapter(this)
         recyclerView.adapter = adapter
 
-        apiClient.getHourly(cityName) { t, response ->
-            if (t != null) {
-                showToast("Error Occurred with External Server$t")
+        apiClient.getHourly(cityName) { hourlyError, response ->
+            if (hourlyError != null) {
+                showToast("Error Occurred with External Server$hourlyError")
             } else {
-                response as HourlyModel
-
                 createdView.findViewById<TextView>(R.id.hourly_capital_name).text = cityName
-                adapter.updateAdapter(response.hourlyData)
-                recyclerView.addItemDecoration(
-                    DividerItemDecoration(requireContext(), LinearLayoutManager.HORIZONTAL)
-                )
+                adapter.updateAdapter((response as HourlyModel).hourlyData)
+                var itemDecoration =
+                    DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL)
+
+                requireContext().getDrawable(R.drawable.devider)
+                    ?.let { itemDecoration.setDrawable(it) }
+
+                recyclerView.addItemDecoration(itemDecoration)
             }
         }
     }
+
 }

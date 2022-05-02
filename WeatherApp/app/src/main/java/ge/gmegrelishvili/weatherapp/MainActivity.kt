@@ -1,8 +1,8 @@
 package ge.gmegrelishvili.weatherapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageButton
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
     private lateinit var menuTodayBt: ImageButton

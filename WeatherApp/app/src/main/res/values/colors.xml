@@ -10,4 +10,5 @@
     <color name="background_night">#240050</color>
     <color name="background_day">#059FE4</color>
     <color name="view_menu_bg">#01082E</color>
+    <color name="default_font_color">#3C3C3C</color>
 </resources>

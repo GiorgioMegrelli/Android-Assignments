@@ -3,8 +3,8 @@ package ge.gmegrelishvili.weatherapp.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import ge.gmegrelishvili.weatherapp.fragment.TodayFragment
 import ge.gmegrelishvili.weatherapp.fragment.HourlyFragment
+import ge.gmegrelishvili.weatherapp.fragment.TodayFragment
 
 class WeatherAppPagerAdapter(fragmentActivity: FragmentActivity) :
     FragmentStateAdapter(fragmentActivity) {

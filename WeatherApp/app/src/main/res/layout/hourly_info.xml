@@ -13,12 +13,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/hourly_row_item_default_margin"
+        android:textColor="@color/white"
         android:textSize="@dimen/hourly_row_item_time_font_size"
         tools:text="01 PM 08 May" />
 
     <ImageView
         android:id="@+id/hourly_item_icon"
         android:layout_width="@dimen/hourly_row_item_icon_size"
+        android:src="@drawable/image_loading"
         android:layout_height="@dimen/hourly_row_item_icon_size"
         android:layout_marginStart="@dimen/hourly_row_item_default_margin"
         android:contentDescription="@string/weather_icon" />
@@ -28,6 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/hourly_row_item_default_margin"
+        android:textColor="@color/white"
         android:textSize="@dimen/hourly_row_item_temp_font_size"
         android:textStyle="bold"
         tools:text="21°" />
@@ -38,6 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/hourly_row_item_default_margin"
         android:textAllCaps="false"
+        android:textColor="@color/white"
         android:textSize="@dimen/hourly_row_item_time_font_size"
         tools:text="broken clouds" />
 

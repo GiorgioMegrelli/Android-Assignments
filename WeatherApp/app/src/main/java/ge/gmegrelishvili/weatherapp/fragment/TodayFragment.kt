@@ -1,7 +1,6 @@
 package ge.gmegrelishvili.weatherapp.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,11 +8,11 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
 import com.bumptech.glide.Glide
 import ge.gmegrelishvili.weatherapp.Country
 import ge.gmegrelishvili.weatherapp.R
 import ge.gmegrelishvili.weatherapp.model.DetailsModel
-import androidx.fragment.app.setFragmentResultListener
 import java.util.*
 import kotlin.math.round
 
@@ -63,7 +62,14 @@ class TodayFragment : WeatherAppFragment() {
             } else {
                 val detailsModel = response as DetailsModel
 
-                checkTime(Date(detailsModel.date * 1000L))
+                val backColor = getBackgroundColor(detailsModel.getDate())
+                val fontColor = getFontColor(detailsModel.getDate())
+                val textViews = getChildTextViews(createdView)
+
+                createdView.setBackgroundColor(backColor)
+                for (tView in textViews) {
+                    tView.setTextColor(fontColor)
+                }
 
                 val iconUrl =
                     "https://openweathermap.org/img/wn/${detailsModel.weather[0].icon}@2x.png"
@@ -91,4 +97,21 @@ class TodayFragment : WeatherAppFragment() {
             }
         }
     }
+
+    private fun getChildTextViews(view: View): List<TextView> {
+        val queue = LinkedList(listOf(view))
+        val result = ArrayList<TextView>()
+        while (!queue.isEmpty()) {
+            val currView = queue.pop()
+            if (currView is TextView) {
+                result.add(currView)
+            } else if (currView is ViewGroup) {
+                for (i in 0 until currView.childCount) {
+                    queue.push(currView.getChildAt(i))
+                }
+            }
+        }
+        return result
+    }
+
 }

@@ -3,10 +3,10 @@ package ge.gmegrelishvili.weatherapp.api
 import ge.gmegrelishvili.weatherapp.model.DetailsModel
 import ge.gmegrelishvili.weatherapp.model.HourlyModel
 import ge.gmegrelishvili.weatherapp.security.ApiKeyHolder
-import retrofit2.Retrofit
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.Serializable
 

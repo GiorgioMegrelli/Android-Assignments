@@ -8,7 +8,7 @@ class Country {
         const val CapitalDefault = CapitalGe
 
         fun getCapital(countryCode: String): String? {
-            return when(countryCode.lowercase()) {
+            return when (countryCode.lowercase()) {
                 "ge" -> CapitalGe
                 "uk" -> CapitalUk
                 "ja" -> CapitalJa

@@ -1,6 +1,7 @@
 package ge.gmegrelishvili.weatherapp.api
 
-import ge.gmegrelishvili.weatherapp.model.*
+import ge.gmegrelishvili.weatherapp.model.DetailsModel
+import ge.gmegrelishvili.weatherapp.model.HourlyModel
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

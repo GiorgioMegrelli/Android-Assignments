@@ -31,16 +31,16 @@
         android:layout_height="@dimen/today_weather_icon_size"
         android:layout_marginTop="@dimen/today_weather_icon_margin"
         android:contentDescription="@string/weather_icon"
+        android:src="@drawable/image_loading"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/today_capital_name"
-        tools:src="@drawable/ic_launcher_background" />
+        app:layout_constraintTop_toBottomOf="@+id/today_capital_name" />
 
     <TextView
         android:id="@+id/today_output_temp_big"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/today_weather_temp_margin"
+        android:layout_marginTop="@dimen/today_weather_temp_margin"
         android:textSize="@dimen/today_weather_temp_font_size"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,6 +52,7 @@
         android:id="@+id/weather_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/today_weather_temp_margin"
         android:textAllCaps="true"
         android:textSize="@dimen/today_weather_desc_font_size"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,31 +60,31 @@
         app:layout_constraintTop_toBottomOf="@+id/today_output_temp_big"
         tools:text="Broken Clouds" />
 
-    <TextView
-        android:id="@+id/today_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/today_weather_details_margin"
-        android:layout_marginStart="@dimen/today_weather_details_margin"
-        android:text="@string/today_text_details"
-        android:textAllCaps="true"
-        android:textSize="@dimen/today_weather_details_font_size"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/weather_desc" />
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/today_weather_desc_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/today_text">
+        app:layout_constraintTop_toBottomOf="@+id/weather_desc">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/today_weather_details_margin"
+            android:layout_marginBottom="@dimen/today_weather_details_margin"
             android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/today_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/today_text_details"
+                android:textAllCaps="true"
+                android:textSize="@dimen/today_weather_details_font_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/weather_desc" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -176,10 +177,6 @@
                     android:textStyle="bold"
                     tools:text="1010" />
             </RelativeLayout>
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/today_weather_details_margin" />
         </LinearLayout>
 
     </ScrollView>

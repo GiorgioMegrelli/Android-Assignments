@@ -13,14 +13,14 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.round
 
-class HourlyRecyclerViewAdapter(fragmentArg: Fragment) :
+class HourlyRecyclerViewAdapter(private val fragment: Fragment) :
     RecyclerView.Adapter<HourlyRecyclerViewAdapter.HourlyViewHolder>() {
 
-    private val fragment = fragmentArg
-    val items = mutableListOf<HourlyInfoModel>()
+    private val items = mutableListOf<HourlyInfoModel>()
 
     inner class HourlyViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
+
         fun bind(hourlyInfoModel: HourlyInfoModel) {
             val iconUrl =
                 "https://openweathermap.org/img/wn/${hourlyInfoModel.weather[0].icon}@2x.png"
