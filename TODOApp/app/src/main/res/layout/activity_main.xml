@@ -4,16 +4,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".MainActivity">
 
-    <TextView
+    <EditText
+        android:id="@+id/search_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/view_margin"
+        android:layout_marginTop="@dimen/view_margin"
+        android:layout_marginEnd="@dimen/view_margin"
+        android:background="@drawable/border_style"
+        android:hint="@string/search_notes_hint"
+        android:inputType="text"
+        android:maxLines="1"
+        android:padding="@dimen/search_edittext_padding"
+        android:scrollHorizontally="true"
+        android:textColorHint="#757575"
+        android:textSize="@dimen/main_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/view_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_edit_text">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_notes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/view_margin"
+            android:layout_marginEnd="@dimen/view_margin" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/create_note_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:textSize="30dp"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/white"
+        android:contentDescription="@string/add_button_desc"
+        android:src="@drawable/ic_add"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

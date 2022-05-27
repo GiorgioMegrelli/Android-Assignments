@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TODOApp">
         <activity
+            android:name=".notes.NoteActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
