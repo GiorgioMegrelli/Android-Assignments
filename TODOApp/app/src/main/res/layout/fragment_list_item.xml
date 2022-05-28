@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/todo_item_margin"
+    android:layout_marginBottom="@dimen/list_item_margin"
     android:orientation="horizontal"
     tools:context=".notes.NoteActivity">
 
@@ -19,6 +19,7 @@
         android:id="@+id/todo_item_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/check_box"
         app:layout_constraintTop_toTopOf="parent" />

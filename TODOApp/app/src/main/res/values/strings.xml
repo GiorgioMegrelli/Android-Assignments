@@ -3,4 +3,7 @@
     <string name="search_notes_hint">Search your notes</string>
     <string name="add_button_desc">Add a note</string>
     <string name="note_title_hint">Type name here</string>
+    <string name="dots">...</string>
+    <string name="checked_items_count">+ %d checked items</string>
+    <string name="list_item_add_title">List item</string>
 </resources>

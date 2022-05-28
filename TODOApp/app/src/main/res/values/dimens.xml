@@ -18,9 +18,11 @@
 
     <!-- fragment_note -->
     <dimen name="note_box_padding">12dp</dimen>
+    <dimen name="list_item_icon_size">18dp</dimen>
 
     <!-- fragment_list_item -->
     <dimen name="item_delete_icon_size">20dp</dimen>
     <dimen name="title_edittext_padding">12dp</dimen>
-    <dimen name="todo_item_margin">16dp</dimen>
+    <dimen name="list_item_margin">16dp</dimen>
+    <dimen name="list_item_add_padding">10dp</dimen>
 </resources>

@@ -11,25 +11,25 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import ge.gmegrelishvili.todoapp.database.TodoDatabase
 import ge.gmegrelishvili.todoapp.notes.NoteActivity
 import ge.gmegrelishvili.todoapp.notes.NoteViewModel
 import ge.gmegrelishvili.todoapp.notes.adapter.MainActivityNoteAdapter
 
 class MainActivity : AppCompatActivity() {
+
+    private val columnNumber = 2
     private val viewModel: NoteViewModel by lazy {
         ViewModelProvider(
-            this,
-            NoteViewModel.Companion.NoteViewModelFactory(applicationContext)
+            this, NoteViewModel.Companion.NoteViewModelFactory(applicationContext)
         ).get(NoteViewModel::class.java)
     }
-    private val columnNumber = 2
+
+    private lateinit var adapter: MainActivityNoteAdapter
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        TodoDatabase.getInstance(applicationContext)
 
         val searchEditText = findViewById<EditText>(R.id.search_edit_text)
         searchEditText.addTextChangedListener {}
@@ -40,21 +40,26 @@ class MainActivity : AppCompatActivity() {
             startActivity(noteActivity)
         }
 
+        setUpAdapters()
         drawNotes()
     }
 
+    private fun setUpAdapters() {
+        adapter = MainActivityNoteAdapter(this)
+        recyclerView = findViewById(R.id.recycler_notes)
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = GridLayoutManager(this, columnNumber)
+        recyclerView.addItemDecoration(NotesGridLayoutDecoration())
+    }
+
     private fun drawNotes() {
-        val adapter = MainActivityNoteAdapter(this)
-        val recyclerNotes = findViewById<RecyclerView>(R.id.recycler_notes)
-        val gapSize = resources.getDimension(R.dimen.grid_note_between_margin)
-        recyclerNotes.adapter = adapter
-        recyclerNotes.layoutManager = GridLayoutManager(this, columnNumber)
-        recyclerNotes.addItemDecoration(NotesGridLayoutDecoration(gapSize))
+        val searchText = findViewById<EditText>(R.id.search_edit_text).text.toString()
 
         Thread {
-            val notes = TodoDatabase.getInstance(this).getNoteDao().getWLINotes()
+            val notes = viewModel.getWLINotes(searchText)
 
             runOnUiThread {
+                adapter.clear()
                 for (note in notes) {
                     adapter.addNote(note)
                 }
@@ -63,12 +68,12 @@ class MainActivity : AppCompatActivity() {
         }.start()
     }
 
-    inner class NotesGridLayoutDecoration(private val gap: Float) : RecyclerView.ItemDecoration() {
+    inner class NotesGridLayoutDecoration : RecyclerView.ItemDecoration() {
+
+        private val gap = resources.getDimension(R.dimen.grid_note_between_margin)
+
         override fun getItemOffsets(
-            outRect: Rect,
-            view: View,
-            parent: RecyclerView,
-            state: RecyclerView.State
+            outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State
         ) {
             super.getItemOffsets(outRect, view, parent, state)
 
@@ -77,5 +82,9 @@ class MainActivity : AppCompatActivity() {
                 outRect.right = gap.toInt()
             }
         }
+    }
+
+    companion object {
+        const val UpdateResultKey = "UPDATE_RESULT_KEY"
     }
 }
