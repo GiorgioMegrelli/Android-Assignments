@@ -53,6 +53,8 @@ class MainActivityNoteAdapter(private val parentActivity: AppCompatActivity) :
             val firstItems =
                 note.listItems.slice(0 until min(note.listItems.size, maxVisibleItems))
 
+            firstListItems.removeAllViews()
+
             for (item in firstItems) {
                 val view = inflater.inflate(R.layout.fragment_note_item, null)
                 view.findViewById<CheckBox>(R.id.check_box).isChecked = item.checked

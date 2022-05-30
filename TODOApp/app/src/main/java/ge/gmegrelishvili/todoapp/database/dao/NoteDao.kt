@@ -28,11 +28,11 @@ abstract class NoteDao {
 
     @Query(
         """
-        UPDATE Note
-        SET title = COALESCE(:titleNW, title),
+        update Note
+        set title = COALESCE(:titleNW, title),
             is_pinned = :isPinnedNW,
             edit_date = :newEditDate
-        WHERE id = :id
+        where id = :id
     """
     )
     abstract fun update(id: Int, titleNW: String?, isPinnedNW: Boolean, newEditDate: Long)

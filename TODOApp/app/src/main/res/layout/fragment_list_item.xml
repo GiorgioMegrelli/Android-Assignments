@@ -17,10 +17,12 @@
 
     <EditText
         android:id="@+id/todo_item_value"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:hint="@string/list_item_value_hint"
         android:textSize="@dimen/text_size"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/close_todo_item"
         app:layout_constraintStart_toEndOf="@+id/check_box"
         app:layout_constraintTop_toTopOf="parent" />
 
