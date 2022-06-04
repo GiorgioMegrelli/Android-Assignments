@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Alarm App</string>
+    <string name="switch_mode_button_text_fmt">Switch to %s </string>
+    <string name="switch_mode_button_text_light">light</string>
+    <string name="switch_mode_button_text_dark">dark</string>
+    <string name="add_alarm_content_description">Add Alarm</string>
+</resources>
