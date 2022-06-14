@@ -4,4 +4,9 @@
     <string name="switch_mode_button_text_light">light</string>
     <string name="switch_mode_button_text_dark">dark</string>
     <string name="add_alarm_content_description">Add Alarm</string>
+    <string name="dialog_question_str">Are you sure you want to delete item?</string>
+    <string name="dialog_yes_str">Yes</string>
+    <string name="dialog_no_str">No</string>
+    <!-- Shared preferences -->
+    <string name="sp_global_fmt">AlarmApp.SharedPreferences.%s</string>
 </resources>

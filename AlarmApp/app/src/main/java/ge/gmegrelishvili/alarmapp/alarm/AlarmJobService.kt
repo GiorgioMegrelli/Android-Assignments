@@ -5,10 +5,10 @@ import android.app.job.JobService
 
 class AlarmJobService : JobService() {
     override fun onStartJob(p0: JobParameters?): Boolean {
-        TODO("Not yet implemented")
+        return true
     }
 
     override fun onStopJob(p0: JobParameters?): Boolean {
-        TODO("Not yet implemented")
+        return true
     }
 }

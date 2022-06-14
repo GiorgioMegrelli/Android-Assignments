@@ -6,6 +6,7 @@
     android:layout_height="@dimen/alarm_view_height"
     android:layout_marginHorizontal="@dimen/view_margin_default"
     android:background="@drawable/alarm_view_shape"
+    android:longClickable="true"
     tools:context=".MainActivity">
 
     <TextView
@@ -20,6 +21,7 @@
         tools:text="24:00" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/alarm_switcher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/view_margin_default"

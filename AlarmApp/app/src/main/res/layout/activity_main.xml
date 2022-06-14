@@ -26,17 +26,17 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Switch to light/dark" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/add_alarm_button"
             android:layout_width="@dimen/tool_bar_icon_full_height"
             android:layout_height="@dimen/tool_bar_icon_full_height"
             android:layout_marginEnd="@dimen/view_margin_default"
             android:contentDescription="@string/add_alarm_content_description"
             android:padding="@dimen/tool_bar_icon_padding"
-            android:src="@drawable/add"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/add" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
