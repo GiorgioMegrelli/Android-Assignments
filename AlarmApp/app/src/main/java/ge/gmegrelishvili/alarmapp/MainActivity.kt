@@ -75,13 +75,6 @@ class MainActivity : AppCompatActivity(), AlarmAdapterCaller {
                     getResString(R.string.switch_mode_button_text_light)
                 }
             )
-            alarmButton.setImageResource(
-                if (it == APP_MODE_LIGHT) {
-                    R.drawable.add
-                } else {
-                    R.drawable.add_dark
-                }
-            )
         }
     }
 
