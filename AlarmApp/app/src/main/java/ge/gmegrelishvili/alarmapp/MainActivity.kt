@@ -1,7 +1,12 @@
 package ge.gmegrelishvili.alarmapp
 
 import android.annotation.SuppressLint
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.DialogInterface
+import android.content.IntentFilter
 import android.content.res.Configuration
 import android.os.Bundle
 import android.text.format.DateFormat
@@ -15,16 +20,26 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import ge.gmegrelishvili.alarmapp.alarm.*
+import ge.gmegrelishvili.alarmapp.mainactivity.LocalBroadcastReceiver
+import ge.gmegrelishvili.alarmapp.mainactivity.LocalBroadcastReceiverCaller
+import ge.gmegrelishvili.alarmapp.resources.StringReader
+import java.util.*
 
-class MainActivity : AppCompatActivity(), AlarmAdapterCaller {
+class MainActivity : AppCompatActivity(), AlarmAdapterCaller, LocalBroadcastReceiverCaller {
 
     private lateinit var alarmRecyclerView: RecyclerView
     private lateinit var alarmAdapter: AlarmAdapter
 
+    private lateinit var alarmManager: AlarmManager
+    private lateinit var intendBuilder: AlarmBroadcastReceiver.CreateAlarmIntentBuilder
+    private lateinit var broadcastReceiver: BroadcastReceiver
+
     private lateinit var switchButton: TextView
     private lateinit var alarmButton: ImageView
 
-    private val alarmMap = HashMap<Int, AlarmTime24H>()
+    private val storedAlarms = HashMap<Int, AlarmTime24H>()
+    private val startedAlarms = HashMap<Int, PendingIntent>()
+
     private val viewModel: AlarmViewModel by lazy {
         ViewModelProvider(
             this, AlarmViewModel.Companion.NoteViewModelFactory(this)
@@ -32,12 +47,17 @@ class MainActivity : AppCompatActivity(), AlarmAdapterCaller {
     }
     private var appUiMode: Int? = null
 
+    private val resStrings = StringReader(this)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         switchButton = findViewById(R.id.switch_mode_button)
         alarmButton = findViewById(R.id.add_alarm_button)
+
+        alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        intendBuilder = AlarmBroadcastReceiver.CreateAlarmIntentBuilder(this)
 
         appUiMode = getUiMode()
         setAppUiMode()
@@ -52,6 +72,17 @@ class MainActivity : AppCompatActivity(), AlarmAdapterCaller {
         alarmButton.setOnClickListener {
             createAlarm()
         }
+
+        broadcastReceiver = LocalBroadcastReceiver(this)
+        registerReceiver(
+            broadcastReceiver,
+            IntentFilter(AlarmBroadcastReceiver.ALARM_BROADCAST_RECEIVER_ACTIVITY)
+        )
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(broadcastReceiver)
     }
 
     private fun switchUiMode() {
@@ -65,14 +96,14 @@ class MainActivity : AppCompatActivity(), AlarmAdapterCaller {
     }
 
     private fun setAppUiMode() {
-        val buttonFmt = getResString(R.string.switch_mode_button_text_fmt)
+        val buttonFmt = resStrings.getString(R.string.switch_mode_button_text_fmt)
         appUiMode?.let {
             AppCompatDelegate.setDefaultNightMode(it)
             switchButton.text = buttonFmt.format(
                 if (it == APP_MODE_LIGHT) {
-                    getResString(R.string.switch_mode_button_text_dark)
+                    resStrings.getString(R.string.switch_mode_button_text_dark)
                 } else {
-                    getResString(R.string.switch_mode_button_text_light)
+                    resStrings.getString(R.string.switch_mode_button_text_light)
                 }
             )
         }
@@ -94,7 +125,7 @@ class MainActivity : AppCompatActivity(), AlarmAdapterCaller {
     private fun loadData() {
         val alarms = viewModel.getAlarms()
         for (alarm in alarms) {
-            alarmMap[alarm.toTotalMinutes()] = alarm
+            storedAlarms[alarm.toTotalMinutes()] = alarm
         }
     }
 
@@ -108,7 +139,7 @@ class MainActivity : AppCompatActivity(), AlarmAdapterCaller {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun drawAlarms() {
-        val alarms = ArrayList(alarmMap.values)
+        val alarms = ArrayList(storedAlarms.values)
         alarms.sortBy {
             it.toTotalMinutes()
         }
@@ -130,54 +161,95 @@ class MainActivity : AppCompatActivity(), AlarmAdapterCaller {
         timePicker.addOnPositiveButtonClickListener {
             val alarm = AlarmTime24H(timePicker.hour, timePicker.minute, true)
             viewModel.insertAlarm(alarm)
-            alarmMap[alarm.toTotalMinutes()] = alarm
+            storedAlarms[alarm.toTotalMinutes()] = alarm
             drawAlarms()
+            setUpAlarm(alarm.toTotalMinutes(), true)
         }
     }
 
     private fun createTimePicker(): MaterialTimePicker {
+        val currTime = Calendar.getInstance()
         val timeFormat =
             if (DateFormat.is24HourFormat(this)) TimeFormat.CLOCK_24H else TimeFormat.CLOCK_12H
+
+        currTime.add(Calendar.MINUTE, 1)
         return MaterialTimePicker.Builder()
             .setTimeFormat(timeFormat)
-            .setHour(TIME_PICKER_DEFAULT_HOUR)
+            .setHour(currTime.get(Calendar.HOUR_OF_DAY))
+            .setMinute(currTime.get(Calendar.MINUTE))
             .setTitleText(TIME_PICKER_TITLE_TEXT)
             .build()
     }
 
     override fun updateAlarmInvoked(totalMinutes: Int, value: Boolean) {
-        if (alarmMap[totalMinutes] != null) {
-            alarmMap[totalMinutes]!!.scheduled = value
-            viewModel.insertAlarm(alarmMap[totalMinutes]!!)
+        setUpAlarm(totalMinutes, value)
+        updateAlarm(totalMinutes, value)
+    }
+
+    private fun setUpAlarm(totalMinutes: Int, alarmStarted: Boolean, customMillis: Long? = null) {
+        val hasKey = startedAlarms.containsKey(totalMinutes)
+        if (alarmStarted && !hasKey) {
+            val intent = intendBuilder.build(totalMinutes)
+            alarmManager.setExact(
+                AlarmManager.RTC_WAKEUP,
+                customMillis ?: AlarmTimeController.millisToAlarm(totalMinutes),
+                intent
+            )
+            startedAlarms[totalMinutes] = intent
+        } else if (!alarmStarted && hasKey) {
+            alarmManager.cancel(startedAlarms[totalMinutes])
+            startedAlarms.remove(totalMinutes)
+        }
+    }
+
+    private fun updateAlarm(totalMinutes: Int, value: Boolean) {
+        if (storedAlarms[totalMinutes] != null) {
+            storedAlarms[totalMinutes]!!.scheduled = value
+            viewModel.insertAlarm(storedAlarms[totalMinutes]!!)
             drawAlarms()
         }
     }
 
     override fun removeAlarmInvoked(totalMinutes: Int) {
         val listener = DialogInterface.OnClickListener { _, which ->
-            if (which == DialogInterface.BUTTON_POSITIVE && alarmMap[totalMinutes] != null) {
-                viewModel.removeAlarm(alarmMap[totalMinutes]!!)
-                alarmMap.remove(totalMinutes)
+            if (which == DialogInterface.BUTTON_POSITIVE && storedAlarms[totalMinutes] != null) {
+                viewModel.removeAlarm(storedAlarms[totalMinutes]!!)
+                storedAlarms.remove(totalMinutes)
+                setUpAlarm(totalMinutes, false)
                 drawAlarms()
             }
         }
         MaterialAlertDialogBuilder(this)
-            .setTitle(getResString(R.string.dialog_question_str))
-            .setNegativeButton(getResString(R.string.dialog_no_str), listener)
-            .setPositiveButton(getResString(R.string.dialog_yes_str), listener)
+            .setTitle(resStrings.getString(R.string.dialog_question_str))
+            .setNegativeButton(resStrings.getString(R.string.dialog_no_str), listener)
+            .setPositiveButton(resStrings.getString(R.string.dialog_yes_str), listener)
             .show()
     }
 
-    private fun getResString(stringResId: Int): String {
-        return resources.getString(stringResId)
+    override fun cancelAlarm(totalMinutes: Int) {
+        setUpAlarm(totalMinutes, false)
+        updateAlarm(totalMinutes, false)
+        drawAlarms()
+    }
+
+    override fun snoozeAlarm(totalMinutes: Int) {
+        setUpAlarm(totalMinutes, false)
+        setUpAlarm(totalMinutes, true, AlarmTimeController.MILLIS_IN_MINUTE)
+        drawAlarms()
     }
 
     companion object {
-        const val TIME_PICKER_DEFAULT_HOUR = 12
+        const val NO_TOTAL_MINUTES = -1
+        const val NO_PARAM_ARG = -2
+        const val ALARM_CANCELED = 1
+        const val ALARM_SNOOZED = 2
+        const val INTENT_ARG_BACK_TO_ACTIVITY = "INTENT_ARG_BACK_TO_ACTIVITY"
+        const val INTENT_ARG_BACK_TO_ACTIVITY_2 = "INTENT_ARG_BACK_TO_ACTIVITY_2"
         const val TIME_PICKER_TAG = "TIME_PICKER_TAG"
         const val TIME_PICKER_TITLE_TEXT = "Select Alarm Time"
 
         private const val APP_MODE_DARK = AppCompatDelegate.MODE_NIGHT_YES
         private const val APP_MODE_LIGHT = AppCompatDelegate.MODE_NIGHT_NO
     }
+
 }
